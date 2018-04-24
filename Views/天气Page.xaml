@@ -1,0 +1,78 @@
+<Page
+    x:Class="weather.Views.天气Page"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Background>
+        <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/timg.png"/>
+    </Page.Background>
+    <Grid
+        x:Name="ContentArea"
+        Margin="{StaticResource MediumLeftRightMargin}">
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="ms-appx:///Assets/timg.png"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TitleRow" Height="48"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            x:Name="TitlePage"
+            x:Uid="天气_Title"
+            Text="{x:Bind city.Text,Mode=TwoWay}"
+            Style="{StaticResource PageTitleStyle}" />
+
+        <Grid 
+            Grid.Row="1" 
+            >
+            <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
+                Place your content here.-->
+            <ProgressBar Name="loading" Foreground="White"/>
+            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                <StackPanel>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Name="city" Text="loading..." HorizontalAlignment="Center" Margin="0,10" FontSize="50"  Foreground="White"/>
+                        </StackPanel>
+                        <SymbolIcon x:Name="refresh" Symbol="Refresh"  Tapped="refresh_Tapped" Foreground="White" Margin="10,0" HorizontalAlignment="Right"/>
+                    </Grid>
+                    <StackPanel Margin="0,50,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                            <TextBlock Name="temp"  FontSize="40" Foreground="White" Margin="0,0,10,0"/>
+                            <TextBlock Name="wind" FontSize="40" Foreground="White" Margin="10,0,0,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Name="icond"/>
+                            <TextBlock Name="zhuan" FontSize="60" Foreground="White" VerticalAlignment="Center"/>
+                            <Image Name="iconn"/>
+                        </StackPanel>
+                        <TextBlock Name="weather" HorizontalAlignment="Center" FontSize="80" Foreground="White"/>
+                        <TextBlock Name="sug" Margin="15,20,15,20" TextWrapping="Wrap" Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <!--  Adaptive triggers  -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitlePage.Margin" Value="48,0,12,7"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>
